@@ -30,8 +30,8 @@ def upload_file(token, endpoint, filename, content):
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/octet-stream"
     }
-    params = {"filename": filename, "overwrite": True}
-    response = requests.post(
+    params = {"filename": filename, "overwrite": "true"}
+    response = requests.put(
         f"{WAZUH_URL}/{endpoint}",
         headers=headers,
         params=params,
@@ -43,7 +43,7 @@ def upload_file(token, endpoint, filename, content):
     else:
         print(f"❌ Failed to upload {filename}: {response.status_code} - {response.text}")
         raise Exception(f"Upload failed for {filename}")
-
+        
 def main():
     token = get_token()
     print("🔐 Authenticated with Wazuh API")
