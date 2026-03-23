@@ -11,11 +11,18 @@ USER = os.environ["WAZUH_USER"]
 PASSWORD = os.environ["WAZUH_PASSWORD"]
 
 def get_token():
+    url = f"{WAZUH_URL}/security/user/authenticate"
+    print(f"🔍 Connecting to: {url}")
+    print(f"🔍 Using user: {USER}")
+    print(f"🔍 Password length: {len(PASSWORD)}")
     response = requests.get(
-        f"{WAZUH_URL}/security/user/authenticate",
+        url,
         auth=(USER, PASSWORD),
-        verify=False
+        verify=False,
+        params={"raw": "true"}
     )
+    print(f"🔍 Response status: {response.status_code}")
+    print(f"🔍 Response body: {response.text}")
     response.raise_for_status()
     return response.json()["data"]["token"]
 
