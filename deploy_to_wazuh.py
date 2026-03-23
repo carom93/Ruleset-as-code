@@ -7,8 +7,8 @@ from pathlib import Path
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 WAZUH_URL = os.environ["WAZUH_API_URL"]
-USER = os.environ["WAZUH_USER"]
-PASSWORD = os.environ["WAZUH_PASSWORD"]
+USER = os.environ["WAZUH_API_USER"]
+PASSWORD = os.environ["WAZUH_API_PASSWORD"]
 
 def get_token():
     url = f"{WAZUH_URL}/security/user/authenticate"
