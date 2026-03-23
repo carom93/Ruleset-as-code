@@ -25,7 +25,7 @@ jobs:
       - name: Deploy rules and decoders to Wazuh Cloud
         env:
           WAZUH_API_URL: ${{ secrets.WAZUH_API_URL }}
-          WAZUH_USER: ${{ secrets.WAZUH_API_USER }}
-          WAZUH_PASSWORD: ${{ secrets.WAZUH_API_PASSWORD }}
+          WAZUH_API_USER: ${{ secrets.WAZUH_API_USER }}
+          WAZUH_API_PASSWORD: ${{ secrets.WAZUH_API_PASSWORD }}
         run: |
           python deploy_to_wazuh.py
