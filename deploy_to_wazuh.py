@@ -1,20 +1,20 @@
 import os
 import requests
-import base64
+import urllib3
 from pathlib import Path
+
+# Suppress self-signed certificate warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 WAZUH_URL = os.environ["WAZUH_API_URL"]
 USER = os.environ["WAZUH_USER"]
 PASSWORD = os.environ["WAZUH_PASSWORD"]
 
-# Disable SSL warnings if using self-signed cert (Wazuh Cloud uses valid certs, so this is optional)
-requests.packages.urllib3.disable_warnings()
-
 def get_token():
     response = requests.get(
         f"{WAZUH_URL}/security/user/authenticate",
         auth=(USER, PASSWORD),
-        verify=True
+        verify=False
     )
     response.raise_for_status()
     return response.json()["data"]["token"]
@@ -30,7 +30,7 @@ def upload_file(token, endpoint, filename, content):
         headers=headers,
         params=params,
         data=content.encode("utf-8"),
-        verify=True
+        verify=False
     )
     if response.status_code == 200:
         print(f"✅ Uploaded {filename}")
